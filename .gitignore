@@ -1,0 +1,10 @@
+# 컴파일 산출물
+out/
+*.class
+
+# IntelliJ
+.idea/
+*.iml
+
+# macOS
+.DS_Store
