@@ -80,7 +80,7 @@ public class MyGUI extends JFrame {
             Color current = c.getBackground();
         });
 
-        //버튼 2
+        //배경색 변경 버튼
         JButton btn2 = new JButton("배경 색 변경");
         btn2.setBounds(110, 0,100,50);
         btn2.setFont(new Font("",Font.BOLD,12));
@@ -93,7 +93,7 @@ public class MyGUI extends JFrame {
             cRgb.setText("<html>현재 배경<br>R: "+current.getRed()+" G: "+current.getGreen()+" B: "+current.getBlue()+"</html>");
         });
 
-        //버튼 3
+        //필드색 변경버튼
         JButton btn3 = new JButton("필드 색 변경");
         btn3.setBounds(410, 0,100,50);
         btn3.setFont(new Font("",Font.BOLD,12));
