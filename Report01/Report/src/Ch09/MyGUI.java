@@ -242,13 +242,18 @@ public class MyGUI extends JFrame {
         btn5.setBounds(610, 0,100,50);
         btn5.setFont(new Font("",Font.BOLD,12));
         btn5.addActionListener(e->{
-            c.setBackground(new Color(0x14163E));
-            lbl.setBackground(new Color(181, 29, 29));
-            tf.setBackground(Color.WHITE);
-            Color current = c.getBackground();
-            cRgb.setText("<html>현재 배경<br>R: "+current.getRed()+" G: "+current.getGreen()+" B: "+current.getBlue()+"</html>");
-            myNamelbl.setText("Unknown님 안녕하세요!");
-            nameTf.setText("이름을 입력하세요");
+            int result = JOptionPane.showConfirmDialog(null,"전부 초기화하시겠습니까?","초기화",JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                c.setBackground(new Color(0x14163E));
+                lbl.setBackground(new Color(181, 29, 29));
+                tf.setBackground(Color.WHITE);
+                Color current = c.getBackground();
+                cRgb.setText("<html>현재 배경<br>R: " + current.getRed() + " G: " + current.getGreen() + " B: " + current.getBlue() + "</html>");
+                myNamelbl.setText("Unknown님 안녕하세요!");
+                nameTf.setText("이름을 입력하세요");
+            } else {
+                JOptionPane.showMessageDialog(null,"취소되었습니다.");
+            }
         });
 
         setLocationRelativeTo(null); //실행시 gui를 화면 중앙에 배치
