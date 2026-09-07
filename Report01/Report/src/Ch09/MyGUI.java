@@ -10,6 +10,7 @@ public class MyGUI extends JFrame {
     boolean rOneTimeNoti =true;
     boolean lOneTimeNoti =true;
     boolean bOneTimeNoti =true;
+    boolean updateScl =false;
     Container c = getContentPane();
     public MyGUI() {
         setTitle("MYGUI"); //상단 타이틀
@@ -91,9 +92,22 @@ public class MyGUI extends JFrame {
 
 
         //색상변경 텍스트필드
-        JTextField tf = new JTextField("");
+        JTextField tf = new JTextField("여기에 색상을 입력하세요");
         tf.setBounds(210,0,200,50);
-        tf.setFont(new Font("",Font.BOLD,24));
+        tf.setFont(new Font("",Font.BOLD,12));
+
+        tf.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(tf.getText().equals("여기에 색상을 입력하세요"))
+                    tf.setText("");
+            }
+
+            public void focusLost(FocusEvent e) {
+                if(tf.getText().isEmpty())
+                    tf.setText("여기에 색상을 입력하세요");
+            }
+        });
 
         //라벨 숨김 버튼 , 라벨 보이기버튼
         JButton lblShow = new JButton("라벨 보이기");
@@ -132,19 +146,6 @@ public class MyGUI extends JFrame {
             lbl.setBackground(new Color(r,g,b));
         });
 
-        //배경색 변경 버튼
-        JButton btn2 = new JButton("배경 색 변경");
-        btn2.setBounds(110, 0,100,50);
-        btn2.setFont(new Font("",Font.BOLD,12));
-        btn2.addActionListener(e -> {
-            int r = (int)(Math.random()*255)+1;
-            int g = (int)(Math.random()*255)+1;
-            int b = (int)(Math.random()*255)+1;
-            c.setBackground(new Color(r,g,b));
-            Color current = c.getBackground();
-            cRgb.setText("<html>현재 배경<br>R: "+current.getRed()+" G: "+current.getGreen()+" B: "+current.getBlue()+"</html>");
-        });
-
         //필드색 변경버튼
         JButton btn3 = new JButton("필드 색 변경");
         btn3.setBounds(410, 0,100,50);
@@ -176,6 +177,9 @@ public class MyGUI extends JFrame {
         rscl.setValue(startBackGround.getRed());
 
         rscl.addAdjustmentListener(e->{
+            if(updateScl) { //함수로 배경값을 따라갈때 알림이 오지않기 위해
+                return;
+            }
             if (rOneTimeNoti) { //한번만 알림
                 JOptionPane.showMessageDialog(null,"R값을 변경하는 스크롤 바 입니다.");
                 rOneTimeNoti = false;
@@ -195,6 +199,9 @@ public class MyGUI extends JFrame {
         lscl.setValue(startBackGround.getGreen());
 
         lscl.addAdjustmentListener(e->{
+            if(updateScl) {
+                return;
+            }
             if (lOneTimeNoti) { //한번만 알림
                 JOptionPane.showMessageDialog(null,"G값을 변경하는 스크롤 바 입니다.");
                 lOneTimeNoti = false;
@@ -214,6 +221,9 @@ public class MyGUI extends JFrame {
         bscl.setValue(startBackGround.getBlue());
 
         bscl.addAdjustmentListener(e->{
+            if(updateScl) {
+                return;
+            }
             if(bOneTimeNoti) {
                 JOptionPane.showMessageDialog(null,"B값을 변경하는 스크롤 바 입니다.");
                 bOneTimeNoti =false;
@@ -221,6 +231,21 @@ public class MyGUI extends JFrame {
             int b = e.getValue();
             Color current = c.getBackground();
             c.setBackground(new Color(current.getRed(),current.getGreen(),b));
+            cRgb.setText("<html>현재 배경<br>R: "+current.getRed()+" G: "+current.getGreen()+" B: "+current.getBlue()+"</html>");
+        });
+
+        //배경색 변경 버튼
+        JButton btn2 = new JButton("배경 색 변경");
+        btn2.setBounds(110, 0,100,50);
+        btn2.setFont(new Font("",Font.BOLD,12));
+        btn2.addActionListener(e -> {
+            int r = (int)(Math.random()*255)+1;
+            int g = (int)(Math.random()*255)+1;
+            int b = (int)(Math.random()*255)+1;
+            updateScrollBars(rscl, lscl, bscl);
+            c.setBackground(new Color(r,g,b));
+
+            Color current = c.getBackground();
             cRgb.setText("<html>현재 배경<br>R: "+current.getRed()+" G: "+current.getGreen()+" B: "+current.getBlue()+"</html>");
         });
 
@@ -233,6 +258,8 @@ public class MyGUI extends JFrame {
             c.setBackground(new Color((int)(Math.random() * 256),(int)(Math.random() * 256),(int)(Math.random() * 256)));
             lbl.setBackground(new Color((int)(Math.random() * 256),(int)(Math.random() * 256),(int)(Math.random() * 256)));
             tf.setBackground(new Color((int)(Math.random() * 256),(int)(Math.random() * 256),(int)(Math.random() * 256)));
+            nameTf.setBackground(new Color((int)(Math.random() * 256),(int)(Math.random() * 256),(int)(Math.random() * 256)));
+            updateScrollBars(rscl, lscl, bscl);
             Color current = c.getBackground();
             cRgb.setText("<html>현재 배경<br>R: "+current.getRed()+" G: "+current.getGreen()+" B: "+current.getBlue()+"</html>");
         });
@@ -277,6 +304,17 @@ public class MyGUI extends JFrame {
         setVisible(true); //이거 안키면 안보인다
         JOptionPane.showMessageDialog(null,"반갑습니다!");
     }
+    public void updateScrollBars(JScrollBar rscl,JScrollBar lscl,JScrollBar bscl) {
+        updateScl = true;
+
+        Color current = c.getBackground();
+        rscl.setValue(current.getRed());
+        lscl.setValue(current.getGreen());
+        bscl.setValue(current.getBlue());
+
+        updateScl = false;
+    }
+
     public static void main() {
         MyGUI GUI = new MyGUI();
 
