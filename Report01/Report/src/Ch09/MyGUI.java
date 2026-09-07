@@ -274,6 +274,7 @@ public class MyGUI extends JFrame {
                 c.setBackground(new Color(0x14163E));
                 lbl.setBackground(new Color(181, 29, 29));
                 tf.setBackground(Color.WHITE);
+                nameTf.setBackground(Color.WHITE);
                 Color current = c.getBackground();
                 cRgb.setText("<html>현재 배경<br>R: " + current.getRed() + " G: " + current.getGreen() + " B: " + current.getBlue() + "</html>");
                 myNamelbl.setText("Unknown님 안녕하세요!");
